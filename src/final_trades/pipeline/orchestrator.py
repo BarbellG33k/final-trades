@@ -168,6 +168,8 @@ class Collector:
                 ErrorCategory.UNKNOWN, Stage.PERSIST, f"Run aborted: {type(exc).__name__}"
             )
             self._finalize(run, outcomes, discovery)
+            run.status = str(RunStatus.FAILED)  # an aborted run is never a success
+            run.summary = f"Run aborted: {type(exc).__name__}. Pre-abort: {run.summary}"[:2000]
             self.session.commit()
             raise
         self._finalize(run, outcomes, discovery)
@@ -452,14 +454,7 @@ class Collector:
         outcomes: list[UnitOutcome] = []
         fetch = self.fetcher.get(article.url, stage=Stage.FETCH)
         if isinstance(fetch, FetchFailure):
-            self._record_issue(
-                fetch.error_category,
-                fetch.stage,
-                fetch.summary,
-                source_key=str(SourceKey.BENZINGA_ARTICLE),
-                show_key=unit_show,
-                detail=fetch.detail or None,
-            )
+            self._record_article_issue(fetch, unit_show, article.url)
             # The segment date is unknown; attribute the failure to the
             # expected publish month so the run detail can show it.
             return [
@@ -473,14 +468,7 @@ class Collector:
             ]
         seg = benzinga.parse_article(fetch, expected_show=ShowKey.HALFTIME_REPORT)
         if isinstance(seg, FetchFailure):
-            self._record_issue(
-                seg.error_category,
-                seg.stage,
-                seg.summary,
-                source_key=str(SourceKey.BENZINGA_ARTICLE),
-                show_key=unit_show,
-                detail=seg.detail or None,
-            )
+            self._record_article_issue(seg, unit_show, article.url)
             return [
                 UnitOutcome(
                     unit_show,
@@ -491,6 +479,7 @@ class Collector:
                 )
             ]
         result = persist_segment(self.session, seg)
+        self._resolve_article_issues(unit_show, article.url)
         if result.rejections:
             self._record_issue(
                 ErrorCategory.VALIDATION,
@@ -530,9 +519,7 @@ class Collector:
     def _attach_video_corroboration(self, seg: ParsedSegment, discovery: DiscoveryResult) -> None:
         from final_trades.db.models import Recommendation
 
-        items = discovery.fm_items.get(seg.segment_date, [])
-        # Halftime videos are indexed in fm_items only for FM; find HR items via search:
-        hr_items = [i for i in items if i.show == ShowKey.HALFTIME_REPORT]
+        hr_items = discovery.hr_items.get(seg.segment_date, [])
         if not hr_items:
             return
         recs = self.session.scalars(
@@ -542,7 +529,7 @@ class Collector:
         ).all()
         for item in hr_items[:1]:
             for rec in recs:
-                repo.add_evidence(
+                added = repo.add_evidence(
                     self.session,
                     rec,
                     source_key=item.source_key,
@@ -553,6 +540,14 @@ class Collector:
                     excerpt_kind="title",
                     published_at=item.published_at,
                 )
+                if added:
+                    from final_trades.domain import VerificationStatus
+                    from final_trades.pipeline.normalize import upgrade_verification
+
+                    distinct = repo.count_distinct_sources(self.session, rec.id)
+                    rec.verification_status = upgrade_verification(
+                        rec.verification_status, VerificationStatus.VERIFIED, distinct
+                    )
 
     def _record_article_issue(self, failure: FetchFailure, show_key: str, url: str) -> None:
         """Issue keyed by article URL so later runs track per-article recovery."""

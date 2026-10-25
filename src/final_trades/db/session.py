@@ -6,6 +6,7 @@ import json
 import logging
 import sys
 from collections.abc import Iterator
+from contextlib import contextmanager
 from datetime import UTC, datetime
 from typing import Any
 
@@ -63,6 +64,7 @@ def get_session() -> Session:
     return _sessionmaker()
 
 
+@contextmanager
 def session_scope() -> Iterator[Session]:
     """Context-managed session: commit on success, rollback on error."""
     session = get_session()

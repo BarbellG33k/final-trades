@@ -14,7 +14,7 @@ import typer
 app = typer.Typer(add_completion=False, help="Final Trade Intelligence Platform operator CLI.")
 
 
-def _bootstrap(json_logs: bool | None = None) -> tuple:  # type: ignore[type-arg]
+def _bootstrap(seed: bool = True) -> tuple:  # type: ignore[type-arg]
     from final_trades.config import get_settings
     from final_trades.db.seed import ensure_reference_data
     from final_trades.db.session import get_engine, get_session, setup_logging
@@ -23,7 +23,8 @@ def _bootstrap(json_logs: bool | None = None) -> tuple:  # type: ignore[type-arg
     setup_logging(settings)
     get_engine(settings)
     session = get_session()
-    ensure_reference_data(session)
+    if seed:
+        ensure_reference_data(session)
     return session, settings
 
 
@@ -73,10 +74,13 @@ def migrate() -> None:
     from alembic import command
     from alembic.config import Config
 
-    _, settings = _bootstrap()
+    from final_trades.db.seed import ensure_reference_data
+
+    session, settings = _bootstrap(seed=False)
     cfg = Config("alembic.ini")
     cfg.set_main_option("sqlalchemy.url", settings.database_url)
     command.upgrade(cfg, "head")
+    ensure_reference_data(session)
     typer.echo("migrations applied")
 
 
@@ -148,6 +152,11 @@ def fetch_fixtures(
     """
     from pathlib import Path
 
+    if source != "benzinga_halftime":
+        typer.echo(f"unknown source {source!r}", err=True)
+        raise typer.Exit(2)
+
+    from final_trades.domain import ShowKey
     from final_trades.sources import benzinga
     from final_trades.sources.http import PoliteFetcher
 
@@ -155,16 +164,8 @@ def fetch_fixtures(
     fetcher = PoliteFetcher(settings)
     out = Path("tests/fixtures")
     out.mkdir(parents=True, exist_ok=True)
-    if source == "benzinga_halftime":
-        result = fetcher.get(
-            benzinga.TOPIC_URLS[
-                __import__("final_trades.domain", fromlist=["ShowKey"]).ShowKey.HALFTIME_REPORT
-            ]
-        )
-        typer.echo(f"topic fetch: {type(result).__name__}")
-    else:
-        typer.echo(f"unknown source {source!r}", err=True)
-        raise typer.Exit(2)
+    result = fetcher.get(benzinga.TOPIC_URLS[ShowKey.HALFTIME_REPORT])
+    typer.echo(f"topic fetch: {type(result).__name__}")
     typer.echo("fixtures refreshed (inspect and trim before committing)")
 
 
