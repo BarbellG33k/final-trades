@@ -53,6 +53,9 @@ class Settings(BaseSettings):
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     log_json: bool = Field(default=True, alias="LOG_JSON")
 
+    # Frontend build location (set in containers; defaults to repo web/dist)
+    web_dist_dir: str | None = Field(default=None, alias="WEB_DIST_DIR")
+
     @field_validator("market_data_provider")
     @classmethod
     def _check_provider(cls, v: str) -> str:

@@ -1,0 +1,102 @@
+name: Collector
+
+# Scheduled collection + performance jobs. Public repo → free minutes.
+# Cron caveats (delays/drops under load) are harmless by design: the next
+# run's bounded oldest-first backlog recovers any missed work.
+# NOTE: schedules are off-the-hour on purpose (GH cron piles up at :00).
+
+on:
+  schedule:
+    # 13:17 UTC ≈ 08:17 ET — after Benzinga publishes the morning article
+    # for the previous day's Halftime Report segment.
+    - cron: "17 13 * * *"
+    # 23:17 UTC ≈ 18:17 ET — after Fast Money airs and CNBC posts the
+    # Final Trade video (weekdays).
+    - cron: "17 23 * * 1-5"
+    # 23:47 UTC weekdays — performance computation after US close settles.
+    - cron: "47 23 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "What to run"
+        required: true
+        default: "collect"
+        type: choice
+        options: [collect, performance, coverage-report, backfill]
+      backfill_start:
+        description: "backfill start YYYY-MM-DD (mode=backfill only)"
+        required: false
+        default: "2025-10-25"
+      backfill_end:
+        description: "backfill end YYYY-MM-DD (mode=backfill only)"
+        required: false
+        default: "2026-10-25"
+      max_units:
+        description: "bounded units for this invocation"
+        required: false
+        default: "40"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: collector
+  cancel-in-progress: false
+
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - run: uv sync --frozen --no-dev --extra postgres
+
+      - name: Apply migrations
+        run: uv run final-trades migrate
+
+      - name: Determine mode
+        id: mode
+        run: |
+          MODE="${{ inputs.mode }}"
+          if [ -z "$MODE" ]; then
+            case "${{ github.event.schedule }}" in
+              "47 23 * * 1-5") MODE=performance ;;
+              *) MODE=collect ;;
+            esac
+          fi
+          echo "mode=$MODE" >> "$GITHUB_OUTPUT"
+
+      - name: Collect
+        if: steps.mode.outputs.mode == 'collect'
+        run: uv run final-trades collect --once
+        continue-on-error: true # exit codes 1/2 = partial/failed; logged, next run recovers
+
+      - name: Performance
+        if: steps.mode.outputs.mode == 'performance'
+        run: uv run final-trades performance
+
+      - name: Coverage report
+        if: steps.mode.outputs.mode == 'coverage-report'
+        run: uv run final-trades coverage-report
+
+      - name: Backfill (operator-invoked only)
+        if: steps.mode.outputs.mode == 'backfill'
+        run: >
+          uv run final-trades backfill
+          --start "${{ inputs.backfill_start }}"
+          --end "${{ inputs.backfill_end }}"
+          --max-units "${{ inputs.max_units }}"
+        continue-on-error: true
+
+      - name: Post-run coverage snapshot
+        if: always()
+        run: uv run final-trades coverage-report || true

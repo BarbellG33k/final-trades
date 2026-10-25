@@ -1,0 +1,65 @@
+# Cloud Run JOB — scheduled collector (invoked by Cloud Scheduler).
+# maxRetries: 0 by design — recovery is cross-run via the backlog table,
+# NOT via job-level retries (product requirement: no retry loops).
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: ft-collector
+  labels:
+    cloud.googleapis.com/location: REGION
+spec:
+  template:
+    template:
+      spec:
+        serviceAccountName: SA_EMAIL
+        timeoutSeconds: 1800
+        maxRetries: 0
+        containers:
+          - name: collector
+            image: IMAGE_PLACEHOLDER
+            args: ["collect"]
+            env:
+              - name: BACKLOG_MAX_DATES_PER_RUN
+                value: "40"
+              - name: CURRENT_DAY_CAPACITY_SHARE
+                value: "0.6"
+              - name: LOG_JSON
+                value: "true"
+            envFrom:
+              - secretRef:
+                  name: ft-env
+            resources:
+              limits:
+                cpu: "1"
+                memory: 512Mi
+        # DATABASE_URL should reference the secret directly if ft-env is unused:
+        # valueFrom.secretKeyRef: { name: FT_DATABASE_URL, key: latest }
+---
+# Second job for nightly performance computation.
+apiVersion: run.googleapis.com/v1
+kind: Job
+metadata:
+  name: ft-performance
+  labels:
+    cloud.googleapis.com/location: REGION
+spec:
+  template:
+    template:
+      spec:
+        serviceAccountName: SA_EMAIL
+        timeoutSeconds: 1800
+        maxRetries: 0
+        containers:
+          - name: performance
+            image: IMAGE_PLACEHOLDER
+            args: ["performance"]
+            env:
+              - name: LOG_JSON
+                value: "true"
+            envFrom:
+              - secretRef:
+                  name: ft-env
+            resources:
+              limits:
+                cpu: "1"
+                memory: 512Mi

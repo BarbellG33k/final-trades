@@ -1,0 +1,56 @@
+# Cloud Run SERVICE — public read-only API + SPA.
+# Replace IMAGE_PLACEHOLDER, PROJECT, REGION before `gcloud run services replace`.
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: final-trades-api
+  labels:
+    cloud.googleapis.com/location: REGION
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/min-scale: "0" # scale to zero → free tier
+        autoscaling.knative.dev/max-scale: "2" # abuse cap
+        run.googleapis.com/cpu-throttling: "true"
+    spec:
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      serviceAccountName: SA_EMAIL
+      containers:
+        - name: api
+          image: IMAGE_PLACEHOLDER
+          args: ["serve"]
+          ports:
+            - name: http1
+              containerPort: 8000
+          env:
+            - name: API_HOST
+              value: "0.0.0.0"
+            - name: API_CORS_ORIGINS
+              value: "" # same-origin only; SPA served by this container
+            - name: RATE_LIMIT_RPS
+              value: "1"
+            - name: RATE_LIMIT_BURST
+              value: "30"
+            - name: DB_QUERY_TIMEOUT_MS
+              value: "5000"
+            - name: LOG_JSON
+              value: "true"
+          envFrom:
+            - secretRef:
+                name: ft-env # optional: extra non-URL config
+          resources:
+            limits:
+              cpu: "1"
+              memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            failureThreshold: 6
+  traffic:
+    - percent: 100
+      latestRevision: true
