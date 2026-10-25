@@ -107,9 +107,39 @@ and failures. Executed via bounded operator backfill invocations
 (`final-trades backfill`), results land in `coverage_daily` +
 `date_processing_status` and are summarized below after execution.
 
-### Results (sampled runs, residential IP)
+### Results (executed 2026-10-25, residential IP, local SQLite)
 
-*(Appended by the validation runs — see docs/STATUS.md for the latest table.)*
+Method: bounded `final-trades backfill` invocations per sampled month +
+`collect --once` for the current window; ≥10 dates per show in every quarter
+of the target window. Totals after the gate runs: **957 recommendations,
+258 segments (89 FM + 169 HR), 26 analysts, 352 instruments**; 1,984
+forward-return observations computed.
+
+| Window (quarter) | Units | Collected | Created recs | Notes |
+|---|---|---|---|---|
+| current 2026-10-15→25 (Q4) | 39 | 38 | 142 | 77 corroborated (Benzinga+CNBC video); FM 6/6 |
+| 2025-11 (Q4'25) | 51 | 50 | 184 | FM 17/17; HR 33/34; 11-25 HR unresolved (no article published — day before Thanksgiving) |
+| 2026-02 (Q1) | 46 | 44 | 160 | FM 02-06 plural company-name title → UNRESOLVED (honest) |
+| 2026-05 (Q2) | 50 | 49 | 174 | one FM date deferred to backlog |
+| 2026-07 (Q3) | 50 | 50 | 194 | clean sweep both shows |
+| 2026-09 (Q3/Q4) | 27 | 26 | 103 | 09-24 FM company-name title → UNRESOLVED; recovered semantics verified on next run |
+
+Spot-checks (manual, per-date evidence):
+- 2026-10-22 HR: ZS/NOW/SPOT with Ethridge/Sechan/Brown — article + CNBC
+  video agree; **computed entry price for ZS (237.76) exactly equals the
+  close quoted in the article body** — end-to-end pipeline↔price cross-check.
+- 2026-10-23 FM: NVDA/JPM/SLB/XMAG from RSS + video + search, three sources
+  agreeing on date and tickers.
+- Analyst registry after gate: Terranova 17+, Weiss 14+, Lebenthal 13+,
+  Brown 12+, Link 9+ (Oct sample) — matches the known Halftime Investment
+  Committee roster; no hallucinated names observed in any sampled window.
+- FM records: tickers accurate, attribution `(unattributed)`/`unverified`
+  as designed (CNBC publishes none).
+
+Gate verdict: **PASS** — both shows have reliable acquisition paths within
+the window; Benzinga covers Halftime history 12 months back via archive
+sitemaps; queryly search + video pages cover Fast Money history; residual
+gaps are title-format edge cases recorded as UNRESOLVED, not silent.
 
 ## 4. Access-condition notes & risks
 

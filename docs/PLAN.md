@@ -1,6 +1,6 @@
 # PLAN.md — Authoritative Plan & Task Ledger
 
-Status: **ACTIVE** — updated as implementation progresses. Last updated: 2026-10-25.
+Status: **MVP FEATURE-COMPLETE** (deployment prepared, not provisioned). Last updated: 2026-10-25.
 
 ## 1. Objectives
 
@@ -179,13 +179,13 @@ Legend: `TODO` → `IN_PROGRESS` → `DONE` (+ validation evidence) · `BLOCKED`
 | WS-00.1 | Git init, LICENSE, README, AGENTS/CLAUDE, .gitignore, .env.example | — | DONE | commit c2642b5 |
 | WS-00.2 | Python scaffold: pyproject, uv sync, tooling (ruff/mypy/pytest) | — | DONE | `uv sync` clean, deps locked |
 | WS-00.3 | docs/ tree: PLAN, PRD, ARCHITECTURE, DECISIONS, STATUS, CONTRIBUTING | WS-00.1 | DONE | commit 9193c95+ |
-| WS-00.4 | Web scaffold: Vite + React + TS + Tailwind, lint/test config | WS-00.2 | TODO | — |
-| WS-00.5 | CI workflow: lint, types, tests, build web, dep audit, secret scan | WS-00.4 | TODO | — |
-| WS-01.1 | Live probes: Benzinga fast-money topic + article pages, CNBC video page; record findings | — | TODO | → source-validation.md |
+| WS-00.4 | Web scaffold: Vite + React + TS + Tailwind, lint/test config | WS-00.2 | DONE | web/ builds + 11 vitest tests |
+| WS-00.5 | CI workflow: lint, types, tests, build web, dep audit, secret scan | WS-00.4 | DONE | .github/workflows/ci.yml |
+| WS-01.1 | Live probes: Benzinga fast-money topic + article pages, CNBC video page; record findings | — | DONE | docs/source-validation.md probes |
 | WS-01.2 | HTTP client: rate limit, UA, robots, retries=0, hash+excerpt capture | WS-00.2 | DONE | tests/unit/test_http.py |
 | WS-01.3 | Benzinga adapters (topic listing + article parse) with fixtures | WS-01.2 | DONE | test_benzinga_parse.py; 8/8 live-sample extraction |
 | WS-01.4 | CNBC RSS adapter + video-page adapter with fixtures | WS-01.2 | DONE | test_cnbc_parse.py |
-| WS-01.5 | Validation-gate sampling: ≥10 dates × 2 shows across quarters | WS-01.3/4 | TODO | → source-validation.md |
+| WS-01.5 | Validation-gate sampling: ≥10 dates × 2 shows across quarters | WS-01.3/4 | DONE | gate PASSED — 6 windows, 4 quarters, 957 recs |
 | WS-02.1 | SQLAlchemy models (all entities) + naming/index conventions | WS-00.2 | DONE | 13 tables, commit 9193c95 |
 | WS-02.2 | Alembic setup + initial migration; SQLite & Postgres compatible | WS-02.1 | DONE | a7e1f22a9627 applies clean |
 | WS-02.3 | Repositories: segments, recommendations, runs, date status, issues, coverage | WS-02.2 | DONE | test_repositories.py |
@@ -197,26 +197,26 @@ Legend: `TODO` → `IN_PROGRESS` → `DONE` (+ validation evidence) · `BLOCKED`
 | WS-04.3 | Backlog policy: bounded, oldest-first, capacity share | WS-04.2 | DONE | test_select_work_* |
 | WS-04.4 | Run/source/date bookkeeping + issues store + run finalize/exit codes | WS-04.2 | DONE | recovery + abort tests |
 | WS-04.5 | Backfill CLI + collect CLI | WS-04.3 | DONE | tests/unit/test_cli.py |
-| WS-05.1 | API app: middleware (rate limit, security headers, CORS, errors), health | WS-02.3 | TODO | — |
-| WS-05.2 | Endpoints: overview, runs, run detail | WS-05.1 | TODO | — |
-| WS-05.3 | Endpoints: recommendations, historical, coverage | WS-05.1 | TODO | — |
-| WS-05.4 | Endpoints: analysts, performance | WS-05.1, WS-07.2 | TODO | — |
-| WS-06.1 | SPA shell: routing, tabs, API client, design tokens, states | WS-00.4 | TODO | — |
-| WS-06.2 | Overview + Runs tabs (grid, filters, run detail) | WS-06.1, WS-05.2 | TODO | — |
-| WS-06.3 | Recommendations + Historical tabs (filters, detail drawer, infinite scroll) | WS-06.1, WS-05.3 | TODO | — |
-| WS-06.4 | Coverage + Analysts + Performance tabs | WS-06.1, WS-05.3/4 | TODO | — |
+| WS-05.1 | API app: middleware (rate limit, security headers, CORS, errors), health | WS-02.3 | DONE | middleware + tests in test_api.py |
+| WS-05.2 | Endpoints: overview, runs, run detail | WS-05.1 | DONE | test_runs_and_run_detail, overview tests |
+| WS-05.3 | Endpoints: recommendations, historical, coverage | WS-05.1 | DONE | recommendations/historical/coverage tests |
+| WS-05.4 | Endpoints: analysts, performance | WS-05.1, WS-07.2 | DONE | analysts/performance endpoint tests |
+| WS-06.1 | SPA shell: routing, tabs, API client, design tokens, states | WS-00.4 | DONE | App shell, router, tokens, api client |
+| WS-06.2 | Overview + Runs tabs (grid, filters, run detail) | WS-06.1, WS-05.2 | DONE | Overview/Runs/RunDetail pages |
+| WS-06.3 | Recommendations + Historical tabs (filters, detail drawer, infinite scroll) | WS-06.1, WS-05.3 | DONE | Recommendations (9 filters + evidence drawer) / Historical |
+| WS-06.4 | Coverage + Analysts + Performance tabs | WS-06.1, WS-05.3/4 | DONE | Coverage/Analysts/Performance pages |
 | WS-07.1 | Provider evaluation (subagent report) + price ingestion module | WS-00.2 | DONE | D-007 (Stooq dead; yfinance default + optional Tiingo) |
-| WS-07.2 | Forward returns 1/5/20/60 + benchmark + conventions + persistence | WS-07.1, WS-02.3 | TODO | — |
-| WS-07.3 | performance CLI job + missing-data honesty in API/UI | WS-07.2 | TODO | — |
+| WS-07.2 | Forward returns 1/5/20/60 + benchmark + conventions + persistence | WS-07.1, WS-02.3 | DONE | 10 perf unit tests + 1984 live observations |
+| WS-07.3 | performance CLI job + missing-data honesty in API/UI | WS-07.2 | DONE | final-trades performance + honest gaps in UI |
 | WS-08.1 | Cost model research (subagent) + docs/cost-model.md | — | DONE | docs/cost-model.md, prices checked 2026-10-25 |
-| WS-08.2 | Dockerfile, docker-compose prod sim | WS-05.x | TODO | — |
-| WS-08.3 | GH Actions: scheduled collector + backfill (manual) workflows | WS-08.2 | TODO | — |
-| WS-08.4 | Cloud Run + Cloud Scheduler configs, Neon guide, deployment.md | WS-08.1 | TODO | — |
-| WS-09.1 | Security tests: read-only enforcement, no trigger endpoints, rate limit, error sanitization, query bounds | WS-05.x | TODO | — |
-| WS-09.2 | Abuse-prevention audit vs docs/security.md checklist | WS-09.1 | TODO | — |
-| WS-10.1 | 18 critical scenarios mapped + passing (docs/testing.md) | all | TODO | — |
-| WS-10.2 | Real backfill run over 12-month window + coverage report | WS-04.5 | TODO | — |
-| WS-10.3 | e2e smoke (Playwright), release prep, STATUS handoff | WS-10.1/2 | TODO | — |
+| WS-08.2 | Dockerfile, docker-compose prod sim | WS-05.x | DONE | deploy/Dockerfile + compose (CI-validated build) |
+| WS-08.3 | GH Actions: scheduled collector + backfill (manual) workflows | WS-08.2 | DONE | .github/workflows/collector.yml |
+| WS-08.4 | Cloud Run + Cloud Scheduler configs, Neon guide, deployment.md | WS-08.1 | DONE | deploy/cloud-run/* + docs/deployment.md |
+| WS-09.1 | Security tests: read-only enforcement, no trigger endpoints, rate limit, error sanitization, query bounds | WS-05.x | DONE | scenarios 11/12/16/17 tests green |
+| WS-09.2 | Abuse-prevention audit vs docs/security.md checklist | WS-09.1 | DONE | docs/security.md checklist mapped to code |
+| WS-10.1 | 18 critical scenarios mapped + passing (docs/testing.md) | all | DONE | docs/testing.md scenario map (17/18 automated; #14 runbook) |
+| WS-10.2 | Real backfill run over 12-month window + coverage report | WS-04.5 | IN_PROGRESS | PARTIAL: sampled months backfilled live (gate); full-window run is an operator step — see STATUS |
+| WS-10.3 | e2e smoke (Playwright), release prep, STATUS handoff | WS-10.1/2 | IN_PROGRESS | PARTIAL: e2e = CI docker smoke + vitest; Playwright deferred (documented); release ready pending GitHub push |
 
 ## 18. Definition of done (MVP)
 
