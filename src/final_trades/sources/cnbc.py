@@ -19,6 +19,7 @@ import contextlib
 import json
 import re
 from datetime import UTC, datetime
+from typing import Any
 from zoneinfo import ZoneInfo
 
 import feedparser
@@ -138,7 +139,10 @@ def parse_rss(payload: str) -> list[DiscoveredItem] | FetchFailure:
             continue
         published_at = None
         if entry.get("published_parsed"):
-            published_at = datetime(*entry.published_parsed[:6], tzinfo=UTC)
+            t = entry.published_parsed
+            published_at = datetime(
+                t.tm_year, t.tm_mon, t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec, tzinfo=UTC
+            )
         items.append(
             DiscoveredItem(
                 url=link,
@@ -184,7 +188,7 @@ def parse_fm_tickers(title: str) -> list[tuple[str, str | None]]:
     return out
 
 
-def extract_video_ldjson(html: str) -> dict | None:
+def extract_video_ldjson(html: str) -> dict[str, Any] | None:
     for block in re.findall(
         r'<script[^>]*type="application/ld\+json"[^>]*>(.*?)</script>', html, re.S
     ):
