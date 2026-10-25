@@ -178,25 +178,25 @@ Legend: `TODO` → `IN_PROGRESS` → `DONE` (+ validation evidence) · `BLOCKED`
 |----|------|---------|--------|----------|
 | WS-00.1 | Git init, LICENSE, README, AGENTS/CLAUDE, .gitignore, .env.example | — | DONE | commit c2642b5 |
 | WS-00.2 | Python scaffold: pyproject, uv sync, tooling (ruff/mypy/pytest) | — | DONE | `uv sync` clean, deps locked |
-| WS-00.3 | docs/ tree: PLAN, PRD, ARCHITECTURE, DECISIONS, STATUS, CONTRIBUTING | WS-00.1 | IN_PROGRESS | — |
+| WS-00.3 | docs/ tree: PLAN, PRD, ARCHITECTURE, DECISIONS, STATUS, CONTRIBUTING | WS-00.1 | DONE | commit 9193c95+ |
 | WS-00.4 | Web scaffold: Vite + React + TS + Tailwind, lint/test config | WS-00.2 | TODO | — |
 | WS-00.5 | CI workflow: lint, types, tests, build web, dep audit, secret scan | WS-00.4 | TODO | — |
 | WS-01.1 | Live probes: Benzinga fast-money topic + article pages, CNBC video page; record findings | — | TODO | → source-validation.md |
-| WS-01.2 | HTTP client: rate limit, UA, robots, retries=0, hash+excerpt capture | WS-00.2 | TODO | — |
-| WS-01.3 | Benzinga adapters (topic listing + article parse) with fixtures | WS-01.2 | TODO | — |
-| WS-01.4 | CNBC RSS adapter + video-page adapter with fixtures | WS-01.2 | TODO | — |
+| WS-01.2 | HTTP client: rate limit, UA, robots, retries=0, hash+excerpt capture | WS-00.2 | DONE | tests/unit/test_http.py |
+| WS-01.3 | Benzinga adapters (topic listing + article parse) with fixtures | WS-01.2 | DONE | test_benzinga_parse.py; 8/8 live-sample extraction |
+| WS-01.4 | CNBC RSS adapter + video-page adapter with fixtures | WS-01.2 | DONE | test_cnbc_parse.py |
 | WS-01.5 | Validation-gate sampling: ≥10 dates × 2 shows across quarters | WS-01.3/4 | TODO | → source-validation.md |
-| WS-02.1 | SQLAlchemy models (all entities) + naming/index conventions | WS-00.2 | TODO | — |
-| WS-02.2 | Alembic setup + initial migration; SQLite & Postgres compatible | WS-02.1 | TODO | — |
-| WS-02.3 | Repositories: segments, recommendations, runs, date status, issues, coverage | WS-02.2 | TODO | — |
-| WS-03.1 | Normalization: analyst names, tickers/instruments, direction, position type | WS-01.3 | TODO | — |
-| WS-03.2 | Dedupe/idempotency + multi-source merge | WS-02.3 | TODO | — |
-| WS-03.3 | Evidence validation (excerpt length, hash, attribution present) + review statuses | WS-03.1 | TODO | — |
-| WS-04.1 | Market calendar (weekends + NYSE holidays 2025-26) | — | TODO | — |
-| WS-04.2 | Run orchestrator: current-day processing, per-date commits | WS-03.x | TODO | — |
-| WS-04.3 | Backlog policy: bounded, oldest-first, capacity share | WS-04.2 | TODO | — |
-| WS-04.4 | Run/source/date bookkeeping + issues store + run finalize/exit codes | WS-04.2 | TODO | — |
-| WS-04.5 | Backfill CLI + collect CLI | WS-04.3 | TODO | — |
+| WS-02.1 | SQLAlchemy models (all entities) + naming/index conventions | WS-00.2 | DONE | 13 tables, commit 9193c95 |
+| WS-02.2 | Alembic setup + initial migration; SQLite & Postgres compatible | WS-02.1 | DONE | a7e1f22a9627 applies clean |
+| WS-02.3 | Repositories: segments, recommendations, runs, date status, issues, coverage | WS-02.2 | DONE | test_repositories.py |
+| WS-03.1 | Normalization: analyst names, tickers/instruments, direction, position type | WS-01.3 | DONE | pipeline/normalize.py |
+| WS-03.2 | Dedupe/idempotency + multi-source merge | WS-02.3 | DONE | test_persist.py + double-ingest test |
+| WS-03.3 | Evidence validation (excerpt length, hash, attribution present) + review statuses | WS-03.1 | DONE | verification lattice + conflict tests |
+| WS-04.1 | Market calendar (weekends + NYSE holidays 2025-26) | — | DONE | test_market_calendar.py |
+| WS-04.2 | Run orchestrator: current-day processing, per-date commits | WS-03.x | DONE | tests/integration/test_pipeline.py |
+| WS-04.3 | Backlog policy: bounded, oldest-first, capacity share | WS-04.2 | DONE | test_select_work_* |
+| WS-04.4 | Run/source/date bookkeeping + issues store + run finalize/exit codes | WS-04.2 | DONE | recovery + abort tests |
+| WS-04.5 | Backfill CLI + collect CLI | WS-04.3 | DONE | tests/unit/test_cli.py |
 | WS-05.1 | API app: middleware (rate limit, security headers, CORS, errors), health | WS-02.3 | TODO | — |
 | WS-05.2 | Endpoints: overview, runs, run detail | WS-05.1 | TODO | — |
 | WS-05.3 | Endpoints: recommendations, historical, coverage | WS-05.1 | TODO | — |
@@ -205,10 +205,10 @@ Legend: `TODO` → `IN_PROGRESS` → `DONE` (+ validation evidence) · `BLOCKED`
 | WS-06.2 | Overview + Runs tabs (grid, filters, run detail) | WS-06.1, WS-05.2 | TODO | — |
 | WS-06.3 | Recommendations + Historical tabs (filters, detail drawer, infinite scroll) | WS-06.1, WS-05.3 | TODO | — |
 | WS-06.4 | Coverage + Analysts + Performance tabs | WS-06.1, WS-05.3/4 | TODO | — |
-| WS-07.1 | Provider evaluation (subagent report) + price ingestion module | WS-00.2 | TODO | → DECISIONS.md |
+| WS-07.1 | Provider evaluation (subagent report) + price ingestion module | WS-00.2 | DONE | D-007 (Stooq dead; yfinance default + optional Tiingo) |
 | WS-07.2 | Forward returns 1/5/20/60 + benchmark + conventions + persistence | WS-07.1, WS-02.3 | TODO | — |
 | WS-07.3 | performance CLI job + missing-data honesty in API/UI | WS-07.2 | TODO | — |
-| WS-08.1 | Cost model research (subagent) + docs/cost-model.md | — | IN_PROGRESS | subagents running |
+| WS-08.1 | Cost model research (subagent) + docs/cost-model.md | — | DONE | docs/cost-model.md, prices checked 2026-10-25 |
 | WS-08.2 | Dockerfile, docker-compose prod sim | WS-05.x | TODO | — |
 | WS-08.3 | GH Actions: scheduled collector + backfill (manual) workflows | WS-08.2 | TODO | — |
 | WS-08.4 | Cloud Run + Cloud Scheduler configs, Neon guide, deployment.md | WS-08.1 | TODO | — |
