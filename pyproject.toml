@@ -53,7 +53,7 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "UP", "B", "C4", "SIM", "RUF"]
-ignore = ["E501"]
+ignore = ["E501", "UP046", "UP047"]  # UP046/47: keep classic Generic[T] for pydantic compat
 
 [tool.mypy]
 python_version = "3.12"

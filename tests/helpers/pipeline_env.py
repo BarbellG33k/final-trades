@@ -12,6 +12,7 @@ from pathlib import Path
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
+from sqlalchemy.pool import StaticPool
 
 from final_trades.config import Settings
 from final_trades.db import models
@@ -150,8 +151,17 @@ def default_routes() -> dict[str, tuple[int, str]]:
 
 
 def build_env() -> Env:
-    """Construct a fresh integration environment (in-memory SQLite + routes)."""
-    engine = create_engine("sqlite://", future=True)
+    """Construct a fresh integration environment (in-memory SQLite + routes).
+
+    StaticPool + check_same_thread=False share the single in-memory database
+    across threads (TestClient runs the app in a worker thread).
+    """
+    engine = create_engine(
+        "sqlite://",
+        future=True,
+        connect_args={"check_same_thread": False},
+        poolclass=StaticPool,
+    )
     models.Base.metadata.create_all(engine)
     session = sessionmaker(bind=engine, expire_on_commit=False, future=True)()
     ensure_reference_data(session)
