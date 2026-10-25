@@ -117,7 +117,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if assets.is_dir():
             app.mount("/assets", StaticFiles(directory=assets, html=False), name="assets")
 
-        @app.get("/{full_path:path}", include_in_schema=False)
+        @app.get("/{full_path:path}", include_in_schema=False, response_model=None)
         async def spa(full_path: str) -> FileResponse | JSONResponse:  # pragma: no cover - trivial
             if full_path.startswith("api/"):
                 return JSONResponse({"error": "not_found", "message": "Not Found"}, status_code=404)
