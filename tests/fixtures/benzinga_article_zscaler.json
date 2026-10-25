@@ -1,0 +1,98 @@
+{
+ "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62555175/servicenow-zscaler-and-a-music-streaming-giant-on-cnbcs-final-trades",
+ "news_article_ldjson": {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "author": {
+   "@type": "Person",
+   "name": "Avi Kapoor",
+   "url": "https://www.benzinga.com/author/avi-kapoor"
+  },
+  "dateCreated": "2026-10-23T07:51:26.000-04:00",
+  "dateModified": "2026-10-23T07:51:26.000-04:00",
+  "datePublished": "2026-10-23T07:51:26.000-04:00",
+  "description": "CNBC traders picked Zscaler, ServiceNow and Spotify; analyst targets supported the first two, while Spotify jumped 11.1% despite a Q3 earnings miss.",
+  "headline": "ServiceNow, Zscaler and a Music Streaming Giant on CNBC\u2019s \u2018Final Trades\u2019 - ServiceNow (NYSE:NOW)",
+  "image": "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/10/23/Analyst-Backs-Tyson-Protein-Strategy.jpg",
+  "keywords": [
+   "\"PageIsBzPro: BZ\"",
+   "\"CMS: WordPress\"",
+   "\"category: Markets\"",
+   "\"category: Media\"",
+   "\"category: Trading Ideas\"",
+   "\"category: Long Ideas\"",
+   "\"category: News\"",
+   "\"symbol: NOW\"",
+   "\"symbol: SPOT\"",
+   "\"symbol: ZS\"",
+   "\"tag: Joshua Brown\"",
+   "\"tag: Rob Sechan\"",
+   "\"tag: Expert Ideas\"",
+   "\"tag: Halftime Report Final Trades\"",
+   "\"tag: CNBC\""
+  ],
+  "mainEntityOfPage": {
+   "@id": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62555175/servicenow-zscaler-and-a-music-streaming-giant-on-cnbcs-final-trades",
+   "@type": "WebPage"
+  },
+  "mentions": [
+   {
+    "@type": "Corporation",
+    "name": "NOW",
+    "tickerSymbol": "NOW",
+    "url": "https://www.benzinga.com/quote/NOW"
+   },
+   {
+    "@type": "Corporation",
+    "name": "SPOT",
+    "tickerSymbol": "SPOT",
+    "url": "https://www.benzinga.com/quote/SPOT"
+   },
+   {
+    "@type": "Corporation",
+    "name": "ZS",
+    "tickerSymbol": "ZS",
+    "url": "https://www.benzinga.com/quote/ZS"
+   }
+  ],
+  "publisher": {
+   "@type": "Organization",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.benzinga.com/next-assets/images/schema-publisher-logo-benzinga.png",
+    "width": 625,
+    "height": 88
+   },
+   "name": "Benzinga",
+   "url": "https://www.benzinga.com"
+  },
+  "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62555175/servicenow-zscaler-and-a-music-streaming-giant-on-cnbcs-final-trades",
+  "isAccessibleForFree": true,
+  "articleBody": "On CNBC\u2019s \"Halftime Report Final Trades,\" Malcolm Ethridge, managing partner at Capital Area Planning Group, picked Zscaler, Inc. (NASDAQ:ZS).    DA Davidson analyst Rudy Kessinger initiated coverage of Zscaler on Wednesday with a Neutral rating and a price target of $215.    Rob Sechan, CEO of NewEdge Wealth, named ServiceNow, Inc. (NYSE:NOW) as his final trade.    Supporting his choice, Truist Securities analyst Miller Jump on Wednesday maintained ServiceNow with a Buy rating and raised the price target from $130 to $180.    Don\u2019t forget to check out our premarket coverage here     Joshua Brown, co-founder and CEO of Ritholtz Wealth Management, recommended Spotify Technology S.A. (NYSE:SPOT).    Spotify shares rose sharply on Thursday despite the music streaming company missing Wall Street estimates on third-quarter earnings and revenue, as continued growth in premium subscribers and monthly active users lifted investor sentiment.    Spotify reported earnings of $2.85 per share, missing analysts\u2019 consensus estimate of $3.11. Revenue rose 16% year over year to 4.97 billion euros ($5.72 billion), slightly below the consensus estimate of $5.73 billion.    Price Action:     Zscaler shares gained 2.8% to close at $237.76 on Thursday.    ServiceNow shares rose 2.5% to close at $157.00.    Spotify shares jumped 11.1% to settle at $583.66 on Thursday.     Photo via Shutterstock",
+  "about": {
+   "@type": "Corporation",
+   "name": "NOW",
+   "tickerSymbol": "NOW",
+   "url": "https://www.benzinga.com/quote/NOW"
+  },
+  "articleSection": "Markets",
+  "speakable": {
+   "@type": "SpeakableSpecification",
+   "xpath": [
+    "/html/head/title",
+    "/html/head/meta[@name='description']/@content"
+   ],
+   "cssSelector": [
+    "#article-body p"
+   ]
+  },
+  "isPartOf": {
+   "@type": [
+    "CreativeWork",
+    "Product"
+   ],
+   "name": "Benzinga",
+   "productID": "CAowneCICw:openaccess"
+  }
+ }
+}

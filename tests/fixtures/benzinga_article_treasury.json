@@ -1,0 +1,97 @@
+{
+ "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62102848/meta-millrose-properties-cboe-global-markets-and-more-on-cnbcs-final-trades",
+ "news_article_ldjson": {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "author": {
+   "@type": "Person",
+   "name": "Avi Kapoor",
+   "url": "https://www.benzinga.com/author/avi-kapoor"
+  },
+  "dateCreated": "2026-10-01T08:09:13.000-04:00",
+  "dateModified": "2026-10-01T08:09:13.000-04:00",
+  "datePublished": "2026-10-01T08:09:13.000-04:00",
+  "description": "CNBC Final Trades: Cboe, 10-year Treasury, Millrose Properties, and Meta were recommended; Cboe rose, while Meta and Millrose fell.",
+  "headline": "Cboe Global Markets, Meta, Millrose Properties: CNBC \u2018Final Trades\u2019 - Meta Platforms (NASDAQ:META)",
+  "image": "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/10/01/CBOE.jpg",
+  "keywords": [
+   "\"PageIsBzPro: BZ\"",
+   "\"CMS: WordPress\"",
+   "\"category: Markets\"",
+   "\"category: Trading Ideas\"",
+   "\"category: News\"",
+   "\"symbol: META\"",
+   "\"symbol: CBOE\"",
+   "\"symbol: MRP\"",
+   "\"tag: Stephen L. Weiss\"",
+   "\"tag: Jenny Harrington\"",
+   "\"tag: Liz Young\"",
+   "\"tag: Halftime Report Final Trades\"",
+   "\"tag: Joseph M. Terranova\"",
+   "\"tag: CNBC\""
+  ],
+  "mainEntityOfPage": {
+   "@id": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62102848/meta-millrose-properties-cboe-global-markets-and-more-on-cnbcs-final-trades",
+   "@type": "WebPage"
+  },
+  "mentions": [
+   {
+    "@type": "Corporation",
+    "name": "META",
+    "tickerSymbol": "META",
+    "url": "https://www.benzinga.com/quote/META"
+   },
+   {
+    "@type": "Corporation",
+    "name": "CBOE",
+    "tickerSymbol": "CBOE",
+    "url": "https://www.benzinga.com/quote/CBOE"
+   },
+   {
+    "@type": "Corporation",
+    "name": "MRP",
+    "tickerSymbol": "MRP",
+    "url": "https://www.benzinga.com/quote/MRP"
+   }
+  ],
+  "publisher": {
+   "@type": "Organization",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.benzinga.com/next-assets/images/schema-publisher-logo-benzinga.png",
+    "width": 625,
+    "height": 88
+   },
+   "name": "Benzinga",
+   "url": "https://www.benzinga.com"
+  },
+  "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62102848/meta-millrose-properties-cboe-global-markets-and-more-on-cnbcs-final-trades",
+  "isAccessibleForFree": true,
+  "articleBody": "On CNBC\u2019s \"Halftime Report Final Trades,\" Joseph M. Terranova, senior managing director for Virtus Investment Partners, picked Cboe Global Markets Inc (NASDAQ:CBOE).    Cboe Global Markets will announce its financial results for the third quarter before the opening bell on Friday, Oct. 30.    Liz Thomas, SoFi head of investment strategy, recommended U.S. 10 Year Treasury.    Don\u2019t forget to check out our premarket coverage here    Jenny Van Leeuwen Harrington, chief executive officer of Gilman Hill Asset Management, LLC, said Millrose Properties Inc (NYSE:MRP) has a 12.2% dividend yield.    Millrose Properties, on Sept. 23, announced that its board has declared a quarterly cash dividend of approximately 79 cents per share of Class A and Class B common stock.    Stephen Weiss, chief investment officer and managing partner of Short Hills Capital Partners, said he likes Meta Platforms Inc (NASDAQ:META).    Meta is taking its AI spending spree to a new funding market. The company is preparing to tap Europe\u2019s bond market for the first time this autumn, turning what was once a U.S.-centric borrowing story into a global one.    Price Action     Meta shares fell 1.8% to close at $725.18 on Wednesday.    Cboe Global Markets jumped 5.2% on Wednesday.    Millrose Properties shares fell 2% to close at $25.97 during the session.          See More:  Top Value Stocks         Photo via Shutterstock",
+  "about": {
+   "@type": "Corporation",
+   "name": "META",
+   "tickerSymbol": "META",
+   "url": "https://www.benzinga.com/quote/META"
+  },
+  "articleSection": "Markets",
+  "speakable": {
+   "@type": "SpeakableSpecification",
+   "xpath": [
+    "/html/head/title",
+    "/html/head/meta[@name='description']/@content"
+   ],
+   "cssSelector": [
+    "#article-body p"
+   ]
+  },
+  "isPartOf": {
+   "@type": [
+    "CreativeWork",
+    "Product"
+   ],
+   "name": "Benzinga",
+   "productID": "CAowneCICw:openaccess"
+  }
+ }
+}

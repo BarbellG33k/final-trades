@@ -1,0 +1,13 @@
+{
+ "url": "https://www.cnbc.com/video/2026-10-23/final-trade-nvda-jpm-slb-xmag.html",
+ "video_ldjson": {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "contentUrl": "https://pdl-iphone-cnbc-com.akamaized.net/7000428583/71fed4c0-cf2d-11f1-b43b-1f0f00de5b2f/1792792939-49190520240-hd_L.mp4",
+  "description": "CNBC\u2019s \u201cFast Money\u201d team shares their final trades of the day.",
+  "duration": "PT1M",
+  "name": "Final Trade: NVDA, JPM, SLB, XMAG",
+  "thumbnailUrl": "https://image.cnbcfm.com/api/v1/image/108453361-17927929411792792939-49190520240-1080pnbcnews.jpg?v=1792792940",
+  "uploadDate": "2026-10-23T22:04:09.000Z"
+ }
+}

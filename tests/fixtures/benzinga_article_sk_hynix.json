@@ -1,0 +1,113 @@
+{
+ "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62241548/servicetitan-meta-sk-hynix-and-a-consumer-cyclical-stock-on-cnbcs-final-trades",
+ "news_article_ldjson": {
+  "@context": "https://schema.org",
+  "@type": "NewsArticle",
+  "author": {
+   "@type": "Person",
+   "name": "Avi Kapoor",
+   "url": "https://www.benzinga.com/author/avi-kapoor"
+  },
+  "dateCreated": "2026-10-08T07:29:51.000-04:00",
+  "dateModified": "2026-10-08T07:29:51.000-04:00",
+  "datePublished": "2026-10-08T07:29:51.000-04:00",
+  "description": "CNBC final trades: Brown picks ServiceTitan, Link picks Meta, Terranova picks Airbnb, and Weiss picks SK hynix; analysts back all four.",
+  "headline": "ServiceTitan, Meta and SK Hynix: CNBC \u2018Final Trades\u2019 - Meta Platforms (NASDAQ:META)",
+  "image": "https://cdn.benzinga.com/cdn-cgi/image/width=1200,height=800,fit=crop/files/images/story/2026/10/08/Linkping--stergtland--Sweden--05-14-2025.jpg",
+  "keywords": [
+   "\"PageIsBzPro: BZ\"",
+   "\"CMS: WordPress\"",
+   "\"category: Markets\"",
+   "\"category: Media\"",
+   "\"category: Trading Ideas\"",
+   "\"category: Long Ideas\"",
+   "\"category: News\"",
+   "\"symbol: META\"",
+   "\"symbol: ABNB\"",
+   "\"symbol: TTAN\"",
+   "\"symbol: SKHY\"",
+   "\"symbol: C\"",
+   "\"tag: Joe Terranova\"",
+   "\"tag: Stephanie Link\"",
+   "\"tag: Joshua Brown\"",
+   "\"tag: Steve Weiss\"",
+   "\"tag: Halftime Report Final Trades\"",
+   "\"tag: CNBC\""
+  ],
+  "mainEntityOfPage": {
+   "@id": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62241548/servicetitan-meta-sk-hynix-and-a-consumer-cyclical-stock-on-cnbcs-final-trades",
+   "@type": "WebPage"
+  },
+  "mentions": [
+   {
+    "@type": "Corporation",
+    "name": "META",
+    "tickerSymbol": "META",
+    "url": "https://www.benzinga.com/quote/META"
+   },
+   {
+    "@type": "Corporation",
+    "name": "ABNB",
+    "tickerSymbol": "ABNB",
+    "url": "https://www.benzinga.com/quote/ABNB"
+   },
+   {
+    "@type": "Corporation",
+    "name": "TTAN",
+    "tickerSymbol": "TTAN",
+    "url": "https://www.benzinga.com/quote/TTAN"
+   },
+   {
+    "@type": "Corporation",
+    "name": "SKHY",
+    "tickerSymbol": "SKHY",
+    "url": "https://www.benzinga.com/quote/SKHY"
+   },
+   {
+    "@type": "Corporation",
+    "name": "C",
+    "tickerSymbol": "C",
+    "url": "https://www.benzinga.com/quote/C"
+   }
+  ],
+  "publisher": {
+   "@type": "Organization",
+   "logo": {
+    "@type": "ImageObject",
+    "url": "https://www.benzinga.com/next-assets/images/schema-publisher-logo-benzinga.png",
+    "width": 625,
+    "height": 88
+   },
+   "name": "Benzinga",
+   "url": "https://www.benzinga.com"
+  },
+  "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62241548/servicetitan-meta-sk-hynix-and-a-consumer-cyclical-stock-on-cnbcs-final-trades",
+  "isAccessibleForFree": true,
+  "articleBody": "On CNBC\u2019s \"Halftime Report Final Trades,\" Joshua Brown, co-founder and CEO of Ritholtz Wealth Management, said he's sticking with ServiceTitan, Inc. (NASDAQ:TTAN).    Supporting his choice, TD Cowen analyst Andrew Sherman reiterated a Buy rating on ServiceTitan on Wednesday and maintained a $100 price target.    Stephanie Link, chief investment strategist, head of investment solutions and equity portfolio manager at Hightower Advisors, picked Meta Platforms, Inc. (NASDAQ:META), adding that Muse is a \"game changer.\"    Supporting her view, Meta could generate more than $27 billion a year from its month-old Muse personal AI agent by 2030, according to Citigroup Inc. (NYSE:C), as usage grows and the race to become consumers\u2019 default AI agent intensifies.    Don\u2019t forget to check out our premarket coverage here     Joseph M. Terranova, senior managing director for Virtus Investment Partners, said Airbnb, Inc. (NASDAQ:ABNB) is a great stock to buy.    Keybanc analyst Sergio Segura upgraded Airbnb from Sector Weight to Overweight on Oct. 2 and set a $191 price target.    Stephen Weiss, chief investment officer and managing partner of Short Hills Capital Partners, named SK hynix Inc. (NASDAQ:SKHY) as his final trade.    Needham analyst N. Quinn Bolton maintained a Buy on SK hynix on Aug. 24 and raised the price target from $200 to $220.    Price Action     ServiceTitan shares gained 4.5% to close at $71.74 on Wednesday.    Meta shares fell 2.4% to settle at $721.31 on Wednesday.    Airbnb shares gained 0.2% to close at $160.63.    SK hynix shares fell 2.4% to settle at $178.25 on Wednesday.          See More:  Top Value Stocks         Photo via Shutterstock",
+  "about": {
+   "@type": "Corporation",
+   "name": "META",
+   "tickerSymbol": "META",
+   "url": "https://www.benzinga.com/quote/META"
+  },
+  "articleSection": "Markets",
+  "speakable": {
+   "@type": "SpeakableSpecification",
+   "xpath": [
+    "/html/head/title",
+    "/html/head/meta[@name='description']/@content"
+   ],
+   "cssSelector": [
+    "#article-body p"
+   ]
+  },
+  "isPartOf": {
+   "@type": [
+    "CreativeWork",
+    "Product"
+   ],
+   "name": "Benzinga",
+   "productID": "CAowneCICw:openaccess"
+  }
+ }
+}

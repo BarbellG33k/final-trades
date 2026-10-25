@@ -1,0 +1,35 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Halftime Report Final Trades - News, Insights & Market Analysis",
+  "url": "https://www.benzinga.com/topic/halftime-report-final-trades",
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62555175/servicenow-zscaler-and-a-music-streaming-giant-on-cnbcs-final-trades",
+        "name": "ServiceNow, Zscaler and a Music Streaming Giant on CNBC's 'Final Trades'"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62527198/albertsons-ftai-aviation-nextera-energy-and-a-financial-stock-on-cnbcs-final-trades",
+        "name": "Albertsons, FTAI Aviation, NextEra Energy And A Financial Stock On CNBC's 'Final Trades'"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "url": "https://www.benzinga.com/topic/halftime-report-final-trades",
+        "name": "Self-link noise"
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "url": "https://www.benzinga.com/trading-ideas/long-ideas/26/10/62555175/servicenow-zscaler-and-a-music-streaming-giant-on-cnbcs-final-trades",
+        "name": "Duplicate of position 1"
+      }
+    ]
+  }
+}
