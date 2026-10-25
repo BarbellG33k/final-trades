@@ -299,3 +299,25 @@ def test_adjusted_prices_used_for_returns(session: Session) -> None:
 def test_source_row_unused_import_guard(session: Session) -> None:
     # reference data sanity for FK targets used by persistence
     assert get_source(session, SourceKey.BENZINGA_ARTICLE) is not None
+
+
+def test_flatten_handles_multiindex_columns() -> None:
+    """yfinance >=0.2.5x returns (field, ticker) MultiIndex columns even for
+    single-symbol downloads — regression test for the silent-drop bug."""
+    import pandas as pd
+
+    from final_trades.performance import providers
+
+    idx = pd.to_datetime(["2026-10-19", "2026-10-20"])
+    cols = pd.MultiIndex.from_tuples([("Close", "NVDA"), ("Adj Close", "NVDA")])
+    df = pd.DataFrame([[100.0, 99.0], [110.0, 108.9]], index=idx, columns=cols)
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
+    close = providers._flatten(df["Close"])
+    assert close[date(2026, 10, 19)] == 100.0
+    assert close[date(2026, 10, 20)] == 110.0
+    # raw (unflattened) frame column would flatten to nothing — prove the guard matters
+    df2 = pd.DataFrame(
+        [[100.0], [110.0]], index=idx, columns=pd.MultiIndex.from_tuples([("Close", "NVDA")])
+    )
+    assert providers._flatten(df2["Close"]) == {} or len(providers._flatten(df2["Close"])) <= 1

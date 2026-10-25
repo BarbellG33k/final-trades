@@ -431,6 +431,18 @@ class Collector:
             return self._mark(
                 unit_show, d, DateStatus.FAILED, failures=[seg], note=seg.summary[:500]
             )
+        if not seg.recommendations:
+            # Segment exists but its title exposes no extractable instruments
+            # (company-name format). Record existence; stay honestly UNRESOLVED.
+            persist_segment(self.session, seg)
+            self._update_coverage(unit_show, d, 0, ok=1, failed=0, status=CoverageStatus.MISSING)
+            return self._mark(
+                unit_show,
+                d,
+                DateStatus.UNRESOLVED,
+                note="Segment video found but title lists no tickers (company-name format); extraction would require inference",
+                segment_id=self._segment_id(seg.show, seg.segment_date),
+            )
         result = persist_segment(self.session, seg)
         # RSS corroboration: same-day feed item becomes extra evidence.
         self._attach_rss_corroboration(seg)
@@ -644,6 +656,8 @@ class Collector:
         ).all()
         for row in rows:
             expected = next_trading_day(row.processing_date)
+            if expected > self.today:
+                continue  # article not publishable yet — don't reconcile the future
             ym = (expected.year, expected.month)
             if ym in discovery.benzinga_months_covered and ym not in pending_months:
                 outcomes.append(
@@ -712,10 +726,19 @@ class Collector:
             note=note,
         )
 
-    def _update_coverage(self, show: str, d: date, rec_count: int, ok: int, failed: int) -> None:
-        status = CoverageStatus.COMPLETE if rec_count > 0 else CoverageStatus.PARTIAL
-        if failed and not ok:
-            status = CoverageStatus.MISSING
+    def _update_coverage(
+        self,
+        show: str,
+        d: date,
+        rec_count: int,
+        ok: int,
+        failed: int,
+        status: CoverageStatus | None = None,
+    ) -> None:
+        if status is None:
+            status = CoverageStatus.COMPLETE if rec_count > 0 else CoverageStatus.PARTIAL
+            if failed and not ok:
+                status = CoverageStatus.MISSING
         repo.upsert_coverage(self.session, ShowKey(show), d, str(status), rec_count, ok, failed)
 
     def _record_issue(

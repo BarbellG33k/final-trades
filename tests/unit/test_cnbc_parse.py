@@ -103,6 +103,24 @@ def test_parse_video_page_halftime_has_no_recommendations() -> None:
     assert result.recommendations == ()  # attribution comes from Benzinga
 
 
+def test_parse_video_page_fm_company_name_title_yields_empty_recs() -> None:
+    # Real-world variant: 'Final Trades: 2-year Treasury, S&P ETF, Meta, Alphabet'
+    video = {
+        "@type": "VideoObject",
+        "name": "Final Trades: 2-year Treasury, S&P ETF, Meta, Alphabet",
+        "description": "The final trades of the day.",
+        "uploadDate": "2026-09-24T22:10:00.000Z",
+    }
+    html = '<script type="application/ld+json">' + json.dumps(video) + "</script>"
+    result = cnbc.parse_video_page(
+        fetch_result(html, "https://www.cnbc.com/video/2026-09-24/x.html"),
+        ShowKey.FAST_MONEY,
+    )
+    assert isinstance(result, ParsedSegment)
+    assert result.recommendations == ()  # never fabricate tickers from company names
+    assert result.segment_date == date(2026, 9, 24)
+
+
 def test_parse_video_page_missing_metadata() -> None:
     failure = cnbc.parse_video_page(
         fetch_result("<html></html>", "https://www.cnbc.com/video/x.html"),

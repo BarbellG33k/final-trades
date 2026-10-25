@@ -111,7 +111,11 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     # Serve the built SPA if present (web/dist). Assets are content-hashed →
     # immutable caching; unknown non-API paths fall back to index.html.
-    dist = Path(cfg.web_dist_dir) if cfg.web_dist_dir else Path(__file__).resolve().parents[3] / "web" / "dist"
+    dist = (
+        Path(cfg.web_dist_dir)
+        if cfg.web_dist_dir
+        else Path(__file__).resolve().parents[3] / "web" / "dist"
+    )
     if dist.is_dir():
         assets = dist / "assets"
         if assets.is_dir():

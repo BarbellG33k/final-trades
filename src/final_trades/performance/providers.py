@@ -71,6 +71,16 @@ class YFinanceProvider:
             return PriceFetchFailure(symbol, "empty history")
         bars: list[PriceBar] = []
         try:
+            # yfinance >=0.2.5x returns MultiIndex columns (field, ticker)
+            # even for single-symbol downloads — flatten to plain fields.
+            try:
+                import pandas as pd
+
+                if isinstance(df.columns, pd.MultiIndex):
+                    df = df.copy()
+                    df.columns = df.columns.get_level_values(0)
+            except ImportError:  # pragma: no cover - pandas is a hard dep
+                pass
             close = _flatten(df["Close"])
             adj = _flatten(df["Adj Close"]) if "Adj Close" in df else close
             for idx in df.index:

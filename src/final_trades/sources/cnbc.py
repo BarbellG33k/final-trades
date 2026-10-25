@@ -250,15 +250,11 @@ def parse_video_page(
     )
     recs: tuple[RawRecommendation, ...] = ()
     if show == ShowKey.FAST_MONEY:
+        # Two title formats exist in the wild:
+        #   "Final Trade: NVDA, JPM, SLB"   → tickers, extractable
+        #   "Final Trades: Meta, Alphabet"  → company names, NOT extractable
+        #     without inference; we never fabricate tickers (provenance rule).
         parsed = parse_fm_tickers(name)
-        if not parsed:
-            return FetchFailure(
-                ErrorCategory.ATTRIBUTION,
-                Stage.PARSE,
-                "Fast Money title contained no instruments",
-                url=fetch.url,
-                detail={"title": name[:120]},
-            )
         recs = tuple(
             RawRecommendation(
                 ticker_raw=ticker_raw,
@@ -273,6 +269,9 @@ def parse_video_page(
             )
             for ticker_raw, asset_hint in parsed
         )
+    # An FM segment whose title exposes no tickers yields recommendations=()
+    # — the orchestrator records segment existence and marks the date
+    # UNRESOLVED rather than inventing instruments.
     return ParsedSegment(
         show=show,
         segment_date=segment_date,
