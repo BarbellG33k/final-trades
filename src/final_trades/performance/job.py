@@ -1,8 +1,4 @@
-"""Performance computation job (WS-07).
-
-Placeholder wiring so the CLI boots; the real implementation (price
-providers, forward returns, benchmark-relative math) lands in this module.
-"""
+"""Performance computation job entrypoint (invoked by `final-trades performance`)."""
 
 from __future__ import annotations
 
