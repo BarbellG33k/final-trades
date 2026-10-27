@@ -95,7 +95,9 @@ Repo is LIVE and public: **https://github.com/BarbellG33k/final-trades** —
 CI green on first push (backend, web, secrets scan, docker build + container
 smoke all passing, run 40531459671). Dependabot alerts enabled.
 
-1. Create Neon project + roles; add `DATABASE_URL` secret; run backfill
+1. Create Neon project + roles; add `DATABASE_URL` secret; **re-enable the
+   Collector workflow** (disabled 2026-10-27 by operator choice until the DB
+   secret exists: `gh workflow enable collector.yml`); run backfill
    dispatches until backlog=0; verify coverage report.
 2. Deploy Cloud Run service (api-service.yaml edited) or compose on a host;
    verify /healthz, dashboard, 405 on POST.
