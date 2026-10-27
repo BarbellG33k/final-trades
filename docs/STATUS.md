@@ -64,8 +64,9 @@ deployment prepared but NOT provisioned — by explicit operator choice).
    `final-trades backfill --start 2025-10-25 --end 2026-10-25 --max-units 40`
    repeated (or GH Actions dispatch) until coverage-report shows backlog
    exhausted. ~2 min/month at 2s politeness.
-2. **Docker image not built locally** (no daemon on this machine) — CI
-   `docker` job builds + smoke-tests it on push.
+2. ~~Docker image not built locally~~ — **resolved**: CI `docker` job built
+   the image and smoke-tested container boot (migrations + API over real
+   HTTP) on the first push (run 40531459671, all jobs green).
 3. **Playwright browser e2e deferred** (documented deviation in
    `docs/testing.md`): CI docker smoke + TestClient full-stack + vitest
    page tests cover the same guarantees at lower CI weight.
@@ -90,11 +91,14 @@ Postgres (collector RW role / api_ro SELECT-only role) = $0/month verified.
 
 ## Next steps (ordered)
 
-1. Push to GitHub (public) → watch CI (first docker build validation).
-2. Create Neon project + roles; add `DATABASE_URL` secret; run backfill
+Repo is LIVE and public: **https://github.com/BarbellG33k/final-trades** —
+CI green on first push (backend, web, secrets scan, docker build + container
+smoke all passing, run 40531459671). Dependabot alerts enabled.
+
+1. Create Neon project + roles; add `DATABASE_URL` secret; run backfill
    dispatches until backlog=0; verify coverage report.
-3. Deploy Cloud Run service (api-service.yaml edited) or compose on a host;
+2. Deploy Cloud Run service (api-service.yaml edited) or compose on a host;
    verify /healthz, dashboard, 405 on POST.
-4. Rehearse backup/restore drill (scenario #14) on a Neon branch.
-5. Optional: Tiingo key for higher-quality adjusted prices; extend market
+3. Rehearse backup/restore drill (scenario #14) on a Neon branch.
+4. Optional: Tiingo key for higher-quality adjusted prices; extend market
    calendar each December; consider Playwright e2e if UX regressions appear.
