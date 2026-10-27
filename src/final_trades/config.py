@@ -34,7 +34,7 @@ class Settings(BaseSettings):
     )
     http_timeout_seconds: float = Field(default=30.0, gt=0, alias="HTTP_TIMEOUT_SECONDS")
     http_user_agent: str = Field(
-        default="final-trades-collector/0.1 (+https://github.com/final-trades/final-trades)",
+        default="final-trades-collector/0.1 (+https://github.com/BarbellG33k/final-trades)",
         alias="HTTP_USER_AGENT",
     )
     backlog_max_dates_per_run: int = Field(default=40, gt=0, alias="BACKLOG_MAX_DATES_PER_RUN")
