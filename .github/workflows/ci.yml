@@ -80,7 +80,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build image (no push)
         run: docker build -f deploy/Dockerfile -t final-trades:ci .
-      - name: Smoke: migrations + API boot inside container
+      - name: "Smoke: migrations + API boot inside container"
         run: |
           docker run -d --name ft -p 8123:8000 \
             -e DATABASE_URL=sqlite:////tmp/ft.sqlite3 \
